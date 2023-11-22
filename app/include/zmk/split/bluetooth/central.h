@@ -16,3 +16,5 @@ int zmk_split_bt_update_led(struct zmk_periph_led *periph);
 #if IS_ENABLED(CONFIG_ZMK_BACKLIGHT)
 int zmk_split_bt_update_bl(struct backlight_state *periph);
 #endif
+bool zmk_split_bt_central_peripheral_is_connected(uint8_t index);
+bool zmk_split_bt_central_peripheral_is_bonded(uint8_t index);
