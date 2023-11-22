@@ -91,6 +91,8 @@ static bool triggered;
 
 #if ZMK_BLE_IS_CENTRAL
 static struct zmk_periph_led old_led_data;
+static bool last_periph_state[2];
+static uint8_t periph_step;
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_RGB_UNDERGLOW_EXT_POWER)
@@ -279,53 +281,73 @@ static void zmk_rgb_underglow_effect_kinesis() {
         }
         state.animation_step++;
     }
-    // set third led as layer state
-    switch (led_data.layer) {
-    case 0:
-        pixels[2].r = 0;
+    // set third led as layer state unless periph not bonded/connected
+    if (zmk_split_bt_central_peripheral_is_bonded(0)) {
+        pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE * last_periph_state[0];
         pixels[2].g = 0;
         pixels[2].b = 0;
-        break;
-    case 1:
-        pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        pixels[2].b = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        break;
-    case 2:
-        pixels[2].r = 0;
-        pixels[2].g = 0;
-        pixels[2].b = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        break;
-    case 3:
-        pixels[2].r = 0;
-        pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        pixels[2].b = 0;
-        break;
-    case 4:
-        pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+        if (periph_step > 3) {
+            last_periph_state[0] = !last_periph_state[0];
+            periph_step = 0;
+        }
+        periph_step++;
+    } else if (!zmk_split_bt_central_peripheral_is_connected(0)) {
+        pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE * last_periph_state[1];
         pixels[2].g = 0;
         pixels[2].b = 0;
-        break;
-    case 5:
-        pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        pixels[2].g = 0;
-        pixels[2].b = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        break;
-    case 6:
-        pixels[2].r = 0;
-        pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        pixels[2].b = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        break;
-    case 7:
-        pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        pixels[2].b = 0;
-        break;
-    default:
-        pixels[2].r = 0;
-        pixels[2].g = 0;
-        pixels[2].b = 0;
-        break;
+        if (periph_step > 14) {
+            last_periph_state[1] = !last_periph_state[1];
+            periph_step = 0;
+        }
+        periph_step++;
+    } else {
+        switch (led_data.layer) {
+        case 0:
+            pixels[2].r = 0;
+            pixels[2].g = 0;
+            pixels[2].b = 0;
+            break;
+        case 1:
+            pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].b = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            break;
+        case 2:
+            pixels[2].r = 0;
+            pixels[2].g = 0;
+            pixels[2].b = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            break;
+        case 3:
+            pixels[2].r = 0;
+            pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].b = 0;
+            break;
+        case 4:
+            pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].g = 0;
+            pixels[2].b = 0;
+            break;
+        case 5:
+            pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].g = 0;
+            pixels[2].b = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            break;
+        case 6:
+            pixels[2].r = 0;
+            pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].b = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            break;
+        case 7:
+            pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].b = 0;
+            break;
+        default:
+            pixels[2].r = 0;
+            pixels[2].g = 0;
+            pixels[2].b = 0;
+            break;
+        }
     }
     if (old_led_data.layer != led_data.layer || old_led_data.indicators != led_data.indicators) {
         zmk_rgb_underglow_central_send();
