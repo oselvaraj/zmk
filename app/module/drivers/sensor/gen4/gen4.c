@@ -31,14 +31,6 @@ static int gen4_i2c_init(const struct device *dev) {
         LOG_ERR("ext read status: %d", ret);
         return ret;
     }
-    // enable scrolling
-    uint8_t request3[11] = {0x00, 0x09, 0xec, 0xc3, 0x00, 0x00, 0x02, 0x00, 0x05, 0x00, 0xbf};
-    ret = i2c_write_dt(&cfg->bus, request3, 11);
-    if (ret < 0) {
-        LOG_ERR("Set scroll reg: %d", ret);
-        return ret;
-    }
-
     return 0;
 }
 
