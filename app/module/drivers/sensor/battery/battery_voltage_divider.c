@@ -14,7 +14,7 @@
 #include <zephyr/logging/log.h>
 
 #include "battery_common.h"
-#include <drivers/sensor/battery/battery_voltage_divider.h>
+#include <drivers/sensor/battery/battery_charging.h>
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 

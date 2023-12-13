@@ -20,9 +20,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/events/battery_state_changed.h>
 #include <zmk/workqueue.h>
 
-#if CONFIG_ZMK_BATTERY_VOLTAGE_DIVIDER
-#include <drivers/sensor/battery/battery_voltage_divider.h>
-#endif
+#include <drivers/sensor/battery/battery_charging.h>
 
 static uint8_t last_state_of_charge = 0;
 static bool charging = 0;
