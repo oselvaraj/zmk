@@ -228,7 +228,7 @@ ZMK_SUBSCRIPTION(backlight, zmk_usb_conn_state_changed);
 #endif
 
 #if ZMK_BLE_IS_CENTRAL
-ZMK_SUBSCRIPTION(rgb_underglow_activity, zmk_split_peripheral_status_changed);
+ZMK_SUBSCRIPTION(backlight, zmk_split_peripheral_status_changed);
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_SPLIT) && !IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
