@@ -27,8 +27,8 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 static uint8_t last_state_of_charge = 0;
 static bool charging = 0;
 
-uint8_t zmk_battery_state_of_charge() { return last_state_of_charge; }
-bool zmk_battery_charging() { return charging; }
+uint8_t zmk_battery_state_of_charge(void) { return last_state_of_charge; }
+bool zmk_battery_charging(void) { return charging; }
 
 #if DT_HAS_CHOSEN(zmk_battery)
 static const struct device *const battery = DEVICE_DT_GET(DT_CHOSEN(zmk_battery));
@@ -108,7 +108,9 @@ static void zmk_battery_timer(struct k_timer *timer) {
 K_TIMER_DEFINE(battery_timer, zmk_battery_timer, NULL);
 
 static void zmk_battery_start_reporting() {
-    k_timer_start(&battery_timer, K_NO_WAIT, K_SECONDS(CONFIG_ZMK_BATTERY_REPORT_INTERVAL));
+    if (device_is_ready(battery)) {
+        k_timer_start(&battery_timer, K_NO_WAIT, K_SECONDS(CONFIG_ZMK_BATTERY_REPORT_INTERVAL));
+    }
 }
 
 static int zmk_battery_init(const struct device *_arg) {
