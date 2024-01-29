@@ -514,7 +514,7 @@ struct zmk_hid_mouse_report *zmk_hid_get_mouse_report(void) { return &mouse_repo
 #endif // IS_ENABLED(CONFIG_ZMK_MOUSE)
 
 #if IS_ENABLED(CONFIG_ZMK_TRACKPAD)
-struct zmk_hid_ptp_report *zmk_hid_get_ptp_report() { return &ptp_report; }
+struct zmk_hid_ptp_report *zmk_hid_get_ptp_report(void) { return &ptp_report; }
 
 struct zmk_hid_ptp_feature_selective_report *zmk_hid_ptp_get_feature_selective_report() {
     return &ptp_feature_selective_report;
