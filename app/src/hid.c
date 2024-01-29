@@ -522,6 +522,7 @@ struct zmk_hid_ptp_feature_selective_report *zmk_hid_ptp_get_feature_selective_r
 
 void zmk_hid_ptp_set_feature_selective_report(uint8_t selective_report) {
     ptp_feature_selective_report.selective_reporting = selective_report;
+    LOG_DBG("Setting selective reporting to: %d", selective_report);
 }
 
 struct zmk_hid_ptp_feature_mode_report *zmk_hid_ptp_get_feature_mode_report() {
