@@ -499,18 +499,26 @@ void zmk_hid_ptp_set(struct zmk_ptp_finger finger, uint8_t contact_count, uint16
 }
 #endif
 
-struct zmk_hid_keyboard_report *zmk_hid_get_keyboard_report() { return &keyboard_report; }
+struct zmk_hid_keyboard_report *zmk_hid_get_keyboard_report() {
+    return &keyboard_report;
+}
 
-struct zmk_hid_consumer_report *zmk_hid_get_consumer_report() { return &consumer_report; }
+struct zmk_hid_consumer_report *zmk_hid_get_consumer_report() {
+    return &consumer_report;
+}
 
 #if IS_ENABLED(CONFIG_ZMK_MOUSE)
 
-struct zmk_hid_mouse_report *zmk_hid_get_mouse_report() { return &mouse_report; }
+struct zmk_hid_mouse_report *zmk_hid_get_mouse_report() {
+    return &mouse_report;
+}
 
 #endif // IS_ENABLED(CONFIG_ZMK_MOUSE)
 
 #if IS_ENABLED(CONFIG_ZMK_TRACKPAD)
-struct zmk_hid_ptp_report *zmk_hid_get_ptp_report() { return &ptp_report; }
+struct zmk_hid_ptp_report *zmk_hid_get_ptp_report() {
+    return &ptp_report;
+}
 
 struct zmk_hid_ptp_feature_selective_report *zmk_hid_ptp_get_feature_selective_report() {
     return &ptp_feature_selective_report;
