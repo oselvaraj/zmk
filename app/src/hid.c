@@ -40,7 +40,11 @@ static struct zmk_hid_mouse_report mouse_report = {
 // Report containing finger data
 struct zmk_hid_ptp_report ptp_report = {
     .report_id = ZMK_HID_REPORT_ID_TRACKPAD,
-    .body = {.finger = {.confidence_tip = 0, .contact_id = 0, .x = 0, .y = 0},
+    .body = {.finger0 = {.confidence_tip = 0, .contact_id = 0, .x = 0, .y = 0},
+             .finger1 = {.confidence_tip = 0, .contact_id = 0, .x = 0, .y = 0},
+             .finger2 = {.confidence_tip = 0, .contact_id = 0, .x = 0, .y = 0},
+             .finger3 = {.confidence_tip = 0, .contact_id = 0, .x = 0, .y = 0},
+             .finger4 = {.confidence_tip = 0, .contact_id = 0, .x = 0, .y = 0},
              .contact_count = 0,
              .scan_time = 0,
              .buttons = 0}};
@@ -490,35 +494,35 @@ void zmk_hid_mouse_clear() { memset(&mouse_report.body, 0, sizeof(mouse_report.b
 #endif // IS_ENABLED(CONFIG_ZMK_MOUSE)
 
 #if IS_ENABLED(CONFIG_ZMK_TRACKPAD)
-void zmk_hid_ptp_set(struct zmk_ptp_finger finger, uint8_t contact_count, uint16_t scan_time,
+void zmk_hid_ptp_set(struct zmk_ptp_finger finger0, struct zmk_ptp_finger finger1,
+                     struct zmk_ptp_finger finger2, struct zmk_ptp_finger finger3,
+                     struct zmk_ptp_finger finger4, uint8_t contact_count, uint16_t scan_time,
                      uint8_t buttons) {
-    ptp_report.body.finger = finger;
+    ptp_report.body.finger0 = finger0;
+    ptp_report.body.finger1 = finger1;
+    ptp_report.body.finger2 = finger2;
+    ptp_report.body.finger3 = finger3;
+    ptp_report.body.finger4 = finger4;
     ptp_report.body.contact_count = contact_count;
     ptp_report.body.scan_time = scan_time;
     ptp_report.body.buttons = buttons;
 }
+
+void zmk_hid_ptp_clear() { memset(&ptp_report.body, 0, sizeof(ptp_report.body)); }
 #endif
 
-struct zmk_hid_keyboard_report *zmk_hid_get_keyboard_report() {
-    return &keyboard_report;
-}
+struct zmk_hid_keyboard_report *zmk_hid_get_keyboard_report() { return &keyboard_report; }
 
-struct zmk_hid_consumer_report *zmk_hid_get_consumer_report() {
-    return &consumer_report;
-}
+struct zmk_hid_consumer_report *zmk_hid_get_consumer_report() { return &consumer_report; }
 
 #if IS_ENABLED(CONFIG_ZMK_MOUSE)
 
-struct zmk_hid_mouse_report *zmk_hid_get_mouse_report() {
-    return &mouse_report;
-}
+struct zmk_hid_mouse_report *zmk_hid_get_mouse_report() { return &mouse_report; }
 
 #endif // IS_ENABLED(CONFIG_ZMK_MOUSE)
 
 #if IS_ENABLED(CONFIG_ZMK_TRACKPAD)
-struct zmk_hid_ptp_report *zmk_hid_get_ptp_report() {
-    return &ptp_report;
-}
+struct zmk_hid_ptp_report *zmk_hid_get_ptp_report() { return &ptp_report; }
 
 struct zmk_hid_ptp_feature_selective_report *zmk_hid_ptp_get_feature_selective_report() {
     return &ptp_feature_selective_report;

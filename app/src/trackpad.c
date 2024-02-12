@@ -28,6 +28,7 @@ static bool button_mode;
 static int8_t xDelta, yDelta, scrollDelta;
 
 static struct zmk_ptp_finger fingers[CONFIG_ZMK_TRACKPAD_MAX_FINGERS];
+static const struct zmk_ptp_finger empty_finger = {0};
 
 #if IS_ENABLED(CONFIG_ZMK_TRACKPAD_WORK_QUEUE_DEDICATED)
 K_THREAD_STACK_DEFINE(trackpad_work_stack_area, CONFIG_ZMK_TRACKPAD_DEDICATED_THREAD_STACK_SIZE);
@@ -55,9 +56,9 @@ static void handle_trackpad_ptp(const struct device *dev, const struct sensor_tr
     sensor_channel_get(dev, SENSOR_CHAN_BUTTONS, &buttons);
     sensor_channel_get(dev, SENSOR_CHAN_SCAN_TIME, &scan_time);
     // expects bitmap format
-    present_contacts = contacts.val1;
+    present_contacts = contacts.val1 ? contacts.val1 : present_contacts;
     // Buttons and scan time
-    btns = button_mode ? buttons.val1 : 0;
+    btns = buttons.val1;
     scantime = scan_time.val1;
     // released Fingers
     sensor_channel_get(dev, SENSOR_CHAN_X, &x);
@@ -83,16 +84,21 @@ static void zmk_trackpad_tick(struct k_work *work) {
     if (mousemode) {
         zmk_hid_mouse_set(btns, xDelta, yDelta, scrollDelta);
         zmk_endpoints_send_mouse_report();
-    } else if (contacts_to_send) {
-        // LOG_DBG("Trackpad sendy thing trigd %d", 0);
-        for (int i = 0; i < CONFIG_ZMK_TRACKPAD_MAX_FINGERS; i++)
-            if (contacts_to_send & BIT(i)) {
-                LOG_DBG("Trackpad sendy thing trigd %d", i);
-                zmk_hid_ptp_set(fingers[i], present_contacts, scantime, btns);
-                zmk_endpoints_send_ptp_report();
-                contacts_to_send &= !BIT(i);
-                return;
-            }
+    } else if (<Send structire> && surface_mode) {
+
+        LOG_DBG("Trackpad sendy thing trigd %d", i);
+        zmk_hid_ptp_set((contacts_to_send && BIT(0)) ? fingers[0] : empty_finger, fingers[1],
+                        fingers[2], fingers[3], fingers[4], present_contacts, scantime,
+                        button_mode ? btns : 0);
+        zmk_endpoints_send_ptp_report();
+        contacts_to_send = 0;
+        return;
+    } else if (!surface_mode) {
+        // report buttons only
+        LOG_DBG("Trackpad button thing trigd %d", i);
+        zmk_hid_ptp_set(empty_finger, empty_finger, empty_finger, empty_finger, empty_finger,
+                        present_contacts, scantime, button_mode ? btns : 0);
+        zmk_endpoints_send_ptp_report();
     }
 }
 

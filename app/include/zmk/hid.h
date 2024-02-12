@@ -250,6 +250,253 @@ static const uint8_t zmk_hid_report_desc[] = {
     ((CONFIG_ZMK_TRACKPAD_PHYSICAL_Y >> 8) & 0xFF),
     HID_INPUT(0x02),
     HID_END_COLLECTION,
+    // Finger 1
+    HID_COLLECTION(HID_COLLECTION_LOGICAL),
+    HID_LOGICAL_MIN8(0),
+    HID_LOGICAL_MAX8(1),
+    // USAGE (Confidence)
+    HID_USAGE(0x47),
+    // USAGE (Tip switch)
+    HID_USAGE(0x42),
+    HID_REPORT_COUNT(2),
+    HID_REPORT_SIZE(1),
+    HID_INPUT(0x02),
+    // Byte Padding
+    HID_REPORT_COUNT(6),
+    HID_INPUT(0x03),
+
+    // Contact ID
+    HID_USAGE(HID_USAGE_DIGITIZERS_CONTACT_IDENTIFIER),
+    HID_REPORT_COUNT(1),
+    HID_REPORT_SIZE(3),
+    HID_LOGICAL_MAX8(5),
+    HID_INPUT(0x02),
+    // Byte padding
+    HID_REPORT_SIZE(1),
+    HID_REPORT_COUNT(5),
+    HID_INPUT(0x03),
+    // X and Y coords
+    HID_USAGE_PAGE(HID_USAGE_GD),
+    HID_LOGICAL_MIN8(0),
+    // Defined in KConfig
+    HID_LOGICAL_MAX16((CONFIG_ZMK_TRACKPAD_LOGICAL_X & 0xFF),
+                      ((CONFIG_ZMK_TRACKPAD_LOGICAL_X >> 8) & 0xFF)),
+    HID_REPORT_SIZE(16),
+    // Exponent (-2)
+    0x55,
+    0x0e,
+    // Unit (Linear CM)
+    0x65,
+    0x11,
+    // X Usage
+    HID_USAGE(HID_USAGE_GD_X),
+    // Physical Min (0)
+    0x35,
+    0x00,
+    // Physical Max (defined in KConfig)
+    0x46,
+    (CONFIG_ZMK_TRACKPAD_PHYSICAL_X & 0xFF),
+    ((CONFIG_ZMK_TRACKPAD_PHYSICAL_X >> 8) & 0xFF),
+    HID_REPORT_COUNT(1),
+    HID_INPUT(0x02),
+
+    // Y Usage
+    HID_USAGE(HID_USAGE_GD_Y),
+    // Defined in KConfig
+    HID_LOGICAL_MAX16((CONFIG_ZMK_TRACKPAD_LOGICAL_Y & 0xFF),
+                      ((CONFIG_ZMK_TRACKPAD_LOGICAL_Y >> 8) & 0xFF)),
+    // Physical Max (defined in KConfig)
+    0x46,
+    (CONFIG_ZMK_TRACKPAD_PHYSICAL_Y & 0xFF),
+    ((CONFIG_ZMK_TRACKPAD_PHYSICAL_Y >> 8) & 0xFF),
+    HID_INPUT(0x02),
+    HID_END_COLLECTION,
+
+    // Finger 2
+    HID_COLLECTION(HID_COLLECTION_LOGICAL),
+    HID_LOGICAL_MIN8(0),
+    HID_LOGICAL_MAX8(1),
+    // USAGE (Confidence)
+    HID_USAGE(0x47),
+    // USAGE (Tip switch)
+    HID_USAGE(0x42),
+    HID_REPORT_COUNT(2),
+    HID_REPORT_SIZE(1),
+    HID_INPUT(0x02),
+    // Byte Padding
+    HID_REPORT_COUNT(6),
+    HID_INPUT(0x03),
+
+    // Contact ID
+    HID_USAGE(HID_USAGE_DIGITIZERS_CONTACT_IDENTIFIER),
+    HID_REPORT_COUNT(1),
+    HID_REPORT_SIZE(3),
+    HID_LOGICAL_MAX8(5),
+    HID_INPUT(0x02),
+    // Byte padding
+    HID_REPORT_SIZE(1),
+    HID_REPORT_COUNT(5),
+    HID_INPUT(0x03),
+    // X and Y coords
+    HID_USAGE_PAGE(HID_USAGE_GD),
+    HID_LOGICAL_MIN8(0),
+    // Defined in KConfig
+    HID_LOGICAL_MAX16((CONFIG_ZMK_TRACKPAD_LOGICAL_X & 0xFF),
+                      ((CONFIG_ZMK_TRACKPAD_LOGICAL_X >> 8) & 0xFF)),
+    HID_REPORT_SIZE(16),
+    // Exponent (-2)
+    0x55,
+    0x0e,
+    // Unit (Linear CM)
+    0x65,
+    0x11,
+    // X Usage
+    HID_USAGE(HID_USAGE_GD_X),
+    // Physical Min (0)
+    0x35,
+    0x00,
+    // Physical Max (defined in KConfig)
+    0x46,
+    (CONFIG_ZMK_TRACKPAD_PHYSICAL_X & 0xFF),
+    ((CONFIG_ZMK_TRACKPAD_PHYSICAL_X >> 8) & 0xFF),
+    HID_REPORT_COUNT(1),
+    HID_INPUT(0x02),
+
+    // Y Usage
+    HID_USAGE(HID_USAGE_GD_Y),
+    // Defined in KConfig
+    HID_LOGICAL_MAX16((CONFIG_ZMK_TRACKPAD_LOGICAL_Y & 0xFF),
+                      ((CONFIG_ZMK_TRACKPAD_LOGICAL_Y >> 8) & 0xFF)),
+    // Physical Max (defined in KConfig)
+    0x46,
+    (CONFIG_ZMK_TRACKPAD_PHYSICAL_Y & 0xFF),
+    ((CONFIG_ZMK_TRACKPAD_PHYSICAL_Y >> 8) & 0xFF),
+    HID_INPUT(0x02),
+    HID_END_COLLECTION,
+
+    // Finger 3
+    HID_COLLECTION(HID_COLLECTION_LOGICAL),
+    HID_LOGICAL_MIN8(0),
+    HID_LOGICAL_MAX8(1),
+    // USAGE (Confidence)
+    HID_USAGE(0x47),
+    // USAGE (Tip switch)
+    HID_USAGE(0x42),
+    HID_REPORT_COUNT(2),
+    HID_REPORT_SIZE(1),
+    HID_INPUT(0x02),
+    // Byte Padding
+    HID_REPORT_COUNT(6),
+    HID_INPUT(0x03),
+
+    // Contact ID
+    HID_USAGE(HID_USAGE_DIGITIZERS_CONTACT_IDENTIFIER),
+    HID_REPORT_COUNT(1),
+    HID_REPORT_SIZE(3),
+    HID_LOGICAL_MAX8(5),
+    HID_INPUT(0x02),
+    // Byte padding
+    HID_REPORT_SIZE(1),
+    HID_REPORT_COUNT(5),
+    HID_INPUT(0x03),
+    // X and Y coords
+    HID_USAGE_PAGE(HID_USAGE_GD),
+    HID_LOGICAL_MIN8(0),
+    // Defined in KConfig
+    HID_LOGICAL_MAX16((CONFIG_ZMK_TRACKPAD_LOGICAL_X & 0xFF),
+                      ((CONFIG_ZMK_TRACKPAD_LOGICAL_X >> 8) & 0xFF)),
+    HID_REPORT_SIZE(16),
+    // Exponent (-2)
+    0x55,
+    0x0e,
+    // Unit (Linear CM)
+    0x65,
+    0x11,
+    // X Usage
+    HID_USAGE(HID_USAGE_GD_X),
+    // Physical Min (0)
+    0x35,
+    0x00,
+    // Physical Max (defined in KConfig)
+    0x46,
+    (CONFIG_ZMK_TRACKPAD_PHYSICAL_X & 0xFF),
+    ((CONFIG_ZMK_TRACKPAD_PHYSICAL_X >> 8) & 0xFF),
+    HID_REPORT_COUNT(1),
+    HID_INPUT(0x02),
+
+    // Y Usage
+    HID_USAGE(HID_USAGE_GD_Y),
+    // Defined in KConfig
+    HID_LOGICAL_MAX16((CONFIG_ZMK_TRACKPAD_LOGICAL_Y & 0xFF),
+                      ((CONFIG_ZMK_TRACKPAD_LOGICAL_Y >> 8) & 0xFF)),
+    // Physical Max (defined in KConfig)
+    0x46,
+    (CONFIG_ZMK_TRACKPAD_PHYSICAL_Y & 0xFF),
+    ((CONFIG_ZMK_TRACKPAD_PHYSICAL_Y >> 8) & 0xFF),
+    HID_INPUT(0x02),
+    HID_END_COLLECTION,
+
+    // Finger 4
+    HID_COLLECTION(HID_COLLECTION_LOGICAL),
+    HID_LOGICAL_MIN8(0),
+    HID_LOGICAL_MAX8(1),
+    // USAGE (Confidence)
+    HID_USAGE(0x47),
+    // USAGE (Tip switch)
+    HID_USAGE(0x42),
+    HID_REPORT_COUNT(2),
+    HID_REPORT_SIZE(1),
+    HID_INPUT(0x02),
+    // Byte Padding
+    HID_REPORT_COUNT(6),
+    HID_INPUT(0x03),
+
+    // Contact ID
+    HID_USAGE(HID_USAGE_DIGITIZERS_CONTACT_IDENTIFIER),
+    HID_REPORT_COUNT(1),
+    HID_REPORT_SIZE(3),
+    HID_LOGICAL_MAX8(5),
+    HID_INPUT(0x02),
+    // Byte padding
+    HID_REPORT_SIZE(1),
+    HID_REPORT_COUNT(5),
+    HID_INPUT(0x03),
+    // X and Y coords
+    HID_USAGE_PAGE(HID_USAGE_GD),
+    HID_LOGICAL_MIN8(0),
+    // Defined in KConfig
+    HID_LOGICAL_MAX16((CONFIG_ZMK_TRACKPAD_LOGICAL_X & 0xFF),
+                      ((CONFIG_ZMK_TRACKPAD_LOGICAL_X >> 8) & 0xFF)),
+    HID_REPORT_SIZE(16),
+    // Exponent (-2)
+    0x55,
+    0x0e,
+    // Unit (Linear CM)
+    0x65,
+    0x11,
+    // X Usage
+    HID_USAGE(HID_USAGE_GD_X),
+    // Physical Min (0)
+    0x35,
+    0x00,
+    // Physical Max (defined in KConfig)
+    0x46,
+    (CONFIG_ZMK_TRACKPAD_PHYSICAL_X & 0xFF),
+    ((CONFIG_ZMK_TRACKPAD_PHYSICAL_X >> 8) & 0xFF),
+    HID_REPORT_COUNT(1),
+    HID_INPUT(0x02),
+
+    // Y Usage
+    HID_USAGE(HID_USAGE_GD_Y),
+    // Defined in KConfig
+    HID_LOGICAL_MAX16((CONFIG_ZMK_TRACKPAD_LOGICAL_Y & 0xFF),
+                      ((CONFIG_ZMK_TRACKPAD_LOGICAL_Y >> 8) & 0xFF)),
+    // Physical Max (defined in KConfig)
+    0x46,
+    (CONFIG_ZMK_TRACKPAD_PHYSICAL_Y & 0xFF),
+    ((CONFIG_ZMK_TRACKPAD_PHYSICAL_Y >> 8) & 0xFF),
+    HID_INPUT(0x02),
+    HID_END_COLLECTION,
 
     HID_USAGE_PAGE(HID_USAGE_DIGITIZERS),
     // Scan Time
@@ -469,7 +716,11 @@ struct zmk_ptp_finger {
 
 struct zmk_hid_ptp_report_body {
     // Finger reporting
-    struct zmk_ptp_finger finger;
+    struct zmk_ptp_finger finger0;
+    struct zmk_ptp_finger finger1;
+    struct zmk_ptp_finger finger2;
+    struct zmk_ptp_finger finger3;
+    struct zmk_ptp_finger finger4;
     // scantime
     uint16_t scan_time;
     // Contact count
@@ -565,8 +816,11 @@ struct zmk_hid_keyboard_report *zmk_hid_get_keyboard_report();
 struct zmk_hid_consumer_report *zmk_hid_get_consumer_report();
 
 #if IS_ENABLED(CONFIG_ZMK_TRACKPAD)
-void zmk_hid_ptp_set(struct zmk_ptp_finger finger, uint8_t contact_count, uint16_t scan_time,
+void zmk_hid_ptp_set(struct zmk_ptp_finger finger0, struct zmk_ptp_finger finger1,
+                     struct zmk_ptp_finger finger2, struct zmk_ptp_finger finger3,
+                     struct zmk_ptp_finger finger4, uint8_t contact_count, uint16_t scan_time,
                      uint8_t buttons);
+void zmk_hid_ptp_clear();
 struct zmk_hid_ptp_report *zmk_hid_get_ptp_report();
 struct zmk_hid_ptp_feature_selective_report *zmk_hid_ptp_get_feature_selective_report();
 void zmk_hid_ptp_set_feature_selective_report(uint8_t selective_report);
