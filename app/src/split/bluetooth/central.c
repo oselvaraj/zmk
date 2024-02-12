@@ -455,10 +455,6 @@ static uint8_t split_central_chrc_discovery_func(struct bt_conn *conn,
         slot->batt_lvl_read_params.single.offset = 0;
         bt_gatt_read(conn, &slot->batt_lvl_read_params);
 #endif /* IS_ENABLED(CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING) */
-    }
-
-    bool subscribed = slot->run_behavior_handle && slot->subscribe_params.value_handle;
-
     } else if (bt_uuid_cmp(chrc_uuid, BT_UUID_DECLARE_128(ZMK_SPLIT_BT_CHAR_DATA_XFER_UUID)) == 0) {
         LOG_DBG("Found data transfer handle");
         slot->discover_params.uuid = NULL;
@@ -724,8 +720,8 @@ static void split_central_connected(struct bt_conn *conn, uint8_t conn_err) {
 
     LOG_DBG("Connected: %s", addr);
 
-    ZMK_EVENT_RAISE(new_zmk_split_peripheral_status_changed(
-        (struct zmk_split_peripheral_status_changed){.connected = true}));
+    raise_zmk_split_peripheral_status_changed(
+        (struct zmk_split_peripheral_status_changed){.connected = true});
 
     confirm_peripheral_slot_conn(conn);
     split_central_process_connection(conn);
@@ -745,8 +741,8 @@ static void split_central_disconnected(struct bt_conn *conn, uint8_t reason) {
     k_msgq_put(&peripheral_batt_lvl_msgq, &ev, K_NO_WAIT);
     k_work_submit(&peripheral_batt_lvl_work);
 #endif // IS_ENABLED(CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING)
-    ZMK_EVENT_RAISE(new_zmk_split_peripheral_status_changed(
-        (struct zmk_split_peripheral_status_changed){.connected = false}));
+    raise_zmk_split_peripheral_status_changed(
+        (struct zmk_split_peripheral_status_changed){.connected = false});
 
     err = release_peripheral_slot_for_conn(conn);
 
@@ -919,7 +915,7 @@ int zmk_split_central_send_data(enum data_tag tag, uint8_t size, uint8_t *data) 
     return split_bt_data_xfer_payload(payload);
 }
 
-int zmk_split_bt_central_init(const struct device *_arg) {
+int zmk_split_bt_central_init(void) {
     k_work_queue_start(&split_central_split_run_q, split_central_split_run_q_stack,
                        K_THREAD_STACK_SIZEOF(split_central_split_run_q_stack),
                        CONFIG_ZMK_BLE_THREAD_PRIORITY, NULL);
