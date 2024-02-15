@@ -48,14 +48,16 @@ struct k_work_q *zmk_trackpad_work_q() {
 
 static void zmk_trackpad_tick(struct k_work *work) {
     if (mousemode) {
-        LOG_DBG("Mouse sender running");
+        // LOG_DBG("Mouse sender running");
         zmk_hid_mouse_set(btns, xDelta, yDelta, scrollDelta);
         zmk_endpoints_send_mouse_report();
     } else if (surface_mode) {
 
-        LOG_DBG("Trackpad sender running");
-        zmk_hid_ptp_set((contacts_to_send && BIT(0)) ? fingers[0] : empty_finger,
-                        (contacts_to_send && BIT(1)) ? fingers[1] : empty_finger,
+        // LOG_DBG("Trackpad sender running");
+        LOG_DBG("total contacts: %d, received contacts: %d, bitmap contacts %d", present_contacts,
+                received_contacts, contacts_to_send);
+
+        zmk_hid_ptp_set((contacts_to_send && BIT(0)) ? fingers[0] : empty_finger, empty_finger,
                         (contacts_to_send && BIT(2)) ? fingers[2] : empty_finger,
                         (contacts_to_send && BIT(3)) ? fingers[3] : empty_finger,
                         (contacts_to_send && BIT(4)) ? fingers[4] : empty_finger, present_contacts,
@@ -66,7 +68,7 @@ static void zmk_trackpad_tick(struct k_work *work) {
         return;
     } else if (!surface_mode) {
         // report buttons only
-        LOG_DBG("Trackpad button thing trigd");
+        /// LOG_DBG("Trackpad button thing trigd");
         zmk_hid_ptp_set(empty_finger, empty_finger, empty_finger, empty_finger, empty_finger, 0,
                         scantime, button_mode ? btns : 0);
         zmk_endpoints_send_ptp_report();
