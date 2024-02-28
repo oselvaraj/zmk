@@ -57,11 +57,10 @@ static void zmk_trackpad_tick(struct k_work *work) {
         LOG_DBG("total contacts: %d, received contacts: %d, bitmap contacts %d", present_contacts,
                 received_contacts, contacts_to_send);
 
-        zmk_hid_ptp_set((contacts_to_send & BIT(0)) ? fingers[0] : empty_finger,
-                        (contacts_to_send & BIT(1)) ? fingers[1] : empty_finger,
-                        (contacts_to_send & BIT(2)) ? fingers[2] : empty_finger,
-                        (contacts_to_send & BIT(3)) ? fingers[3] : empty_finger,
-                        (contacts_to_send & BIT(4)) ? fingers[4] : empty_finger, present_contacts,
+        zmk_hid_ptp_set((contacts_to_send && BIT(0)) ? fingers[0] : empty_finger, empty_finger,
+                        (contacts_to_send && BIT(2)) ? fingers[2] : empty_finger,
+                        (contacts_to_send && BIT(3)) ? fingers[3] : empty_finger,
+                        (contacts_to_send && BIT(4)) ? fingers[4] : empty_finger, present_contacts,
                         scantime, button_mode ? btns : 0);
         zmk_endpoints_send_ptp_report();
         contacts_to_send = 0;
@@ -84,7 +83,7 @@ static void handle_trackpad_ptp(const struct device *dev, const struct sensor_tr
         LOG_ERR("fetch: %d", ret);
         return;
     }
-    // LOG_DBG("Trackpad handler trigd %d", 0);
+    LOG_DBG("Trackpad handler trigd %d", 0);
 
     struct sensor_value contacts, confidence_tip, id, x, y, buttons, scan_time;
     sensor_channel_get(dev, SENSOR_CHAN_CONTACTS, &contacts);
@@ -104,11 +103,11 @@ static void handle_trackpad_ptp(const struct device *dev, const struct sensor_tr
     fingers[id.val1].confidence_tip = confidence_tip.val1;
     fingers[id.val1].contact_id = id.val1;
     fingers[id.val1].x = x.val1;
-    fingers[id.val1].y = CONFIG_ZMK_TRACKPAD_LOGICAL_Y - y.val1;
+    fingers[id.val1].y = y.val1;
     contacts_to_send |= BIT(id.val1);
     received_contacts++;
 
-    // LOG_DBG("total contacts: %d, received contacts: %d", present_contacts, received_contacts);
+    LOG_DBG("total contacts: %d, received contacts: %d", present_contacts, received_contacts);
 
     if (present_contacts == received_contacts)
         k_work_submit_to_queue(zmk_trackpad_work_q(), &trackpad_work);
@@ -233,12 +232,12 @@ static int trackpad_init() {
 #endif
     button_mode = true;
     surface_mode = true;
-    zmk_trackpad_set_mouse_mode(false);
+    zmk_trackpad_set_mouse_mode(true);
     return 0;
 }
 
 static int trackpad_event_listener(const zmk_event_t *eh) {
-    zmk_trackpad_set_mouse_mode(false);
+    zmk_trackpad_set_mouse_mode(true);
     return 0;
 }
 
