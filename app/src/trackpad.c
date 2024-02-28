@@ -57,7 +57,8 @@ static void zmk_trackpad_tick(struct k_work *work) {
         LOG_DBG("total contacts: %d, received contacts: %d, bitmap contacts %d", present_contacts,
                 received_contacts, contacts_to_send);
 
-        zmk_hid_ptp_set((contacts_to_send && BIT(0)) ? fingers[0] : empty_finger, empty_finger,
+        zmk_hid_ptp_set((contacts_to_send && BIT(0)) ? fingers[0] : empty_finger,
+                        (contacts_to_send && BIT(1)) ? fingers[1] : empty_finger,
                         (contacts_to_send && BIT(2)) ? fingers[2] : empty_finger,
                         (contacts_to_send && BIT(3)) ? fingers[3] : empty_finger,
                         (contacts_to_send && BIT(4)) ? fingers[4] : empty_finger, present_contacts,
