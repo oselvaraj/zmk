@@ -35,7 +35,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #if !DT_HAS_CHOSEN(zmk_indicators)
 
-#error "A zmk,underglow chosen node must be declared"
+#error "A zmk,indicators chosen node must be declared"
 
 #endif
 
@@ -265,7 +265,7 @@ int zmk_stp_indicators_disable_batt() {
     return 0;
 }
 
-static int zmk_stp_indicators_init(const struct device *_arg) {
+static int zmk_stp_indicators_init(void) {
 
     LOG_DBG("Initialising STP indicators");
 

@@ -342,6 +342,8 @@ endif
 menuconfig ZMK_STP_INDICATORS
     bool "STP Specific indicators"
     select LED_STRIP
+    select ZMK_LOW_PRIORITY_WORK_QUEUE
+    select ZMK_HID_INDICATORS
 
 if ZMK_STP_INDICATORS
 
