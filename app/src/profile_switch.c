@@ -38,7 +38,7 @@ static void zmk_profile_switch_callback(const struct device *dev, struct gpio_ca
     k_work_submit_to_queue(zmk_workqueue_lowprio_work_q(), &profileswitch_work);
 }
 
-static int zmk_profile_switch_init(const struct device *_arg) {
+static int zmk_profile_switch_init(void) {
 
     if (!device_is_ready(switchgpio.port)) {
         LOG_ERR("A GPIO device is not ready");
