@@ -25,6 +25,8 @@
         zmk,matrix_transform = &default_transform;
         zmk,battery = &vbatt;
         zephyr,console = &cdc_acm_uart;
+        zmk,profileswitch = &profileswitch;
+        zmk,indicators = &led_strip;
     };
 
     default_transform: keymap_transform_0 {

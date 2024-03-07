@@ -5,6 +5,7 @@
 #include <dt-bindings/zmk/reset.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/trackpad.h>
+#include <dt-bindings/zmk/stp.h>
 
 
 / {
@@ -22,7 +23,7 @@
             // ------------------------------------------------------------------------------------------------------------
 
             bindings = <
-            &kp ESC     &kp F1    &kp F2    &kp F3     &kp F4     &kp F5    &kp F6  &kp F7    &kp F8    &kp F9   &kp F10    &kp F11    &out OUT_TOG     &mo 1    &bootloader  &sys_reset
+            &kp ESC     &kp F1    &kp F2    &kp F3     &kp F4     &kp F5    &kp F6  &kp F7    &kp F8    &kp F9   &kp F10    &kp F11    &kp F12    &mo 1    &kp DEL  &kp INS
             &kp GRAVE   &kp N1    &kp N2    &kp N3     &kp N4     &kp N5    &kp N6  &kp N7    &kp N8    &kp N9    &kp N0  &kp MINUS  &kp EQUAL             &kp BACKSPACE      &kp HOME
             &kp TAB        &kp Q     &kp W     &kp E      &kp R      &kp T     &kp Y   &kp U      &kp I     &kp O     &kp P   &kp LBKT   &kp RBKT         &kp BSLH            &kp END
             &kp CLCK          &kp A     &kp S     &kp D      &kp F      &kp G     &kp H   &kp J      &kp K     &kp L  &kp SEMI    &kp SQT              &kp RET                &kp PG_UP
@@ -33,11 +34,11 @@
 
         raise {
             bindings = <
-            &none       &kp C_MUTE     &kp C_VOL_DN    &kp C_VOL_UP  &kp C_PREV  &kp C_PP       &kp C_NEXT  &bl BL_DEC  &bl BL_INC  &kp C_BRI_DN  &kp C_BRI_UP  &bt BT_CLR     &none       &trans  &none  &none
+            &none       &kp C_MUTE     &kp C_VOL_DN    &kp C_VOL_UP  &kp C_PREV  &kp C_PP       &kp C_NEXT  &bl BL_DEC  &bl BL_INC  &kp C_BRI_DN  &kp C_BRI_UP  &bt BT_CLR     &stp STP_BAT       &trans  &none  &none
             &none       &none          &none           &none         &none       &none          &none       &none       &none       &none         &none         &none          &none           &none      &none
             &none       &none          &kp C_MEDIA_WWW &none         &none       &kp C_MEDIA_TV &none      &none     &none        &none     &none    &none  &none       &sys_reset  &none
-            &none       &none          &none     &none     &none    &tp TP_MULTI_TOG      &none    &none      &none        &none      &none   &none      &bootloader  &none
-            &none       &none          &none   &none      &none   &none      &none      &none      &none       &none    &none  &none          &none       &none
+            &none       &none          &none     &none     &none    &none      &kp C_AC_HOME    &none      &none        &none      &none   &none      &bootloader  &none
+            &none       &none          &none   &none      &none   &kp C_AC_BACK      &none      &none      &none       &none    &none  &none          &none       &none
             &none       &none          &none     &none    &none      &none      &none  &none        &none        &none  &none
             >;
         };
