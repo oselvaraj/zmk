@@ -321,6 +321,11 @@ static void zmk_rgb_underglow_effect_kinesis() {
         pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
         pixels[2].b = 0;
         break;
+    case 8:
+        pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+        pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+        pixels[2].b = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+        break;
     default:
         pixels[2].r = 0;
         pixels[2].g = 0;
@@ -421,6 +426,10 @@ static void zmk_rgb_underglow_effect_kinesis() {
             pixels[0].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
             pixels[0].b = 0;
             break;
+        case 8:
+            pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].b = 0;
         default:
             pixels[0].r = 0;
             pixels[0].g = 0;
