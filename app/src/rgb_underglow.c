@@ -283,7 +283,7 @@ static void zmk_rgb_underglow_effect_kinesis() {
     case 0:
         pixels[2].r = 0;
         pixels[2].g = 0;
-        pixels[2].b = 0;
+        pixels[2].b = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
         break;
     case 1:
         pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
@@ -382,7 +382,7 @@ static void zmk_rgb_underglow_effect_kinesis() {
         // set third led as layer
         switch (led_data.layer) {
         case 0:
-            pixels[0].r = 0;
+            pixels[0].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
             pixels[0].g = 0;
             pixels[0].b = 0;
             break;
