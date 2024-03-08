@@ -397,14 +397,14 @@ int left_right_rgb_decimals[] = {0, 63, 9, 18, 27, 36, 45, 54, 57, 58, 59, 60, 6
             (led_data.indicators & ZMK_LED_SCROLLLOCK_BIT) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
         // set third led as layer
         if(led_data.layer > 49) {
-            pixels[2].r = 0;
-            pixels[2].g = 0;
-            pixels[2].b = 0;        
+            pixels[0].r = 0;
+            pixels[0].g = 0;
+            pixels[0].b = 0;        
         }
         else {
-            pixels[2].r = ((left_right_rgb_decimals[led_data.layer]>>2)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-            pixels[2].g = ((left_right_rgb_decimals[led_data.layer]>>1)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-            pixels[2].b = ((left_right_rgb_decimals[led_data.layer]>>0)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[0].r = ((left_right_rgb_decimals[led_data.layer]>>2)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[0].g = ((left_right_rgb_decimals[led_data.layer]>>1)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[0].b = ((left_right_rgb_decimals[led_data.layer]>>0)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
         }
       
       /*switch (led_data.layer) {
