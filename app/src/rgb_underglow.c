@@ -220,6 +220,12 @@ static void zmk_rgb_underglow_central_send() {
 #endif
 
 static void zmk_rgb_underglow_effect_kinesis() {
+
+// The following variable contains decimal values of left right RGB states. 
+// This will be used for layer indicators for left and right side kinesis modules. For Ex. 63 means 111 111. (i.e) Left modules RGB state is 111 and right module RGB state is 111
+// This will help in indicating 50 different layers
+int left_right_rgb_decimals[] = {0, 63, 9, 18, 27, 36, 45, 54, 57, 58, 59, 60, 61, 62, 49, 50, 51, 52, 53, 55, 41, 42, 43, 44, 46, 47, 33, 34, 35, 37, 38, 39, 25, 26, 28, 29, 30, 31, 17, 19, 20, 21, 22, 23, 10, 11, 12, 13, 14, 15};
+
 #if ZMK_BLE_IS_CENTRAL
     // leds for central(left) side
 
@@ -280,10 +286,20 @@ static void zmk_rgb_underglow_effect_kinesis() {
         state.animation_step++;
     }
     // set third led as layer state
-    switch (led_data.layer) {
+    if(led_data.layer > 49) {
+        pixels[2].r = 0;
+        pixels[2].g = 0;
+        pixels[2].b = 0;        
+    }
+    else {
+        pixels[2].r = ((left_right_rgb_decimals[led_data.layer]>>5)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+        pixels[2].g = ((left_right_rgb_decimals[led_data.layer]>>4)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+        pixels[2].b = ((left_right_rgb_decimals[led_data.layer]>>3)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+    }
+    /*switch (led_data.layer) {
     case 0:
-        pixels[2].r = 0.5;
-        pixels[2].g = 1;
+        pixels[2].r = 0;
+        pixels[2].g = 0;
         pixels[2].b = 0;
         break;
     case 1:
@@ -321,17 +337,12 @@ static void zmk_rgb_underglow_effect_kinesis() {
         pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
         pixels[2].b = 0;
         break;
-    case 8:
-        pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        pixels[2].b = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-        break;
     default:
         pixels[2].r = 0;
         pixels[2].g = 0;
         pixels[2].b = 0;
         break;
-    }
+    }*/
     if (old_led_data.layer != led_data.layer || old_led_data.indicators != led_data.indicators) {
         zmk_rgb_underglow_central_send();
     }
@@ -385,10 +396,21 @@ static void zmk_rgb_underglow_effect_kinesis() {
         pixels[1].b =
             (led_data.indicators & ZMK_LED_SCROLLLOCK_BIT) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
         // set third led as layer
-        switch (led_data.layer) {
+        if(led_data.layer > 49) {
+            pixels[2].r = 0;
+            pixels[2].g = 0;
+            pixels[2].b = 0;        
+        }
+        else {
+            pixels[2].r = ((left_right_rgb_decimals[led_data.layer]>>2)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].g = ((left_right_rgb_decimals[led_data.layer]>>1)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[2].b = ((left_right_rgb_decimals[led_data.layer]>>0)&1) * CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+        }
+      
+      /*switch (led_data.layer) {
         case 0:
             pixels[0].r = 0;
-            pixels[0].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
+            pixels[0].g = 0;
             pixels[0].b = 0;
             break;
         case 1:
@@ -426,16 +448,12 @@ static void zmk_rgb_underglow_effect_kinesis() {
             pixels[0].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
             pixels[0].b = 0;
             break;
-        case 8:
-            pixels[2].r = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-            pixels[2].g = CONFIG_ZMK_RGB_UNDERGLOW_BRT_SCALE;
-            pixels[2].b = 0;
         default:
             pixels[0].r = 0;
             pixels[0].g = 0;
             pixels[0].b = 0;
             break;
-        }
+        }*/
 #if IS_ENABLED(CONFIG_ZMK_SPLIT_BLE)
     }
 #endif
